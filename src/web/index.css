@@ -1,0 +1,38 @@
+@import "tailwindcss";
+
+@theme {
+  --color-wheat-50: #fbf8ef;
+  --color-wheat-100: #f5edda;
+  --color-wheat-200: #ead8ad;
+  --color-wheat-300: #ddbd78;
+  --color-wheat-400: #d09f46;
+  --color-wheat-500: #bd8530;
+  --color-wheat-600: #9f6826;
+  --color-wheat-700: #804d22;
+  --color-wheat-800: #6a3f23;
+  --color-wheat-900: #59351f;
+  --font-sans: "Inter", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; }
+html { background: #f6f6f4; }
+body { margin: 0; min-width: 320px; min-height: 100vh; color: #191814; background: #f6f6f4; }
+button, input, select, textarea { font: inherit; }
+button { cursor: pointer; }
+::selection { background: #ead8ad; color: #191814; }
+
+@layer components {
+  .panel { @apply rounded-2xl border border-black/6 bg-white shadow-[0_1px_2px_rgba(0,0,0,.03),0_12px_28px_rgba(0,0,0,.025)]; }
+  .input { @apply h-11 w-full rounded-xl border border-black/10 bg-white px-3.5 text-sm outline-none transition placeholder:text-black/35 focus:border-wheat-500 focus:ring-3 focus:ring-wheat-100 disabled:bg-black/3; }
+  .select { @apply h-10 rounded-xl border border-black/10 bg-white px-3 text-sm outline-none focus:border-wheat-500; }
+  .label { @apply mb-2 block text-sm font-medium text-black/70; }
+  .btn-primary { @apply inline-flex h-10 items-center justify-center gap-2 rounded-xl bg-[#171611] px-4 text-sm font-semibold text-white transition hover:bg-wheat-700 disabled:cursor-not-allowed disabled:opacity-50; }
+  .btn-secondary { @apply inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-black/10 bg-white px-4 text-sm font-medium transition hover:bg-black/4 disabled:opacity-50; }
+  .btn-danger { @apply inline-flex h-9 items-center justify-center gap-1.5 rounded-lg bg-red-50 px-3 text-sm font-medium text-red-700 transition hover:bg-red-100; }
+  .badge { @apply inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold; }
+  .table-wrap { @apply w-full overflow-x-auto; }
+  .data-table { @apply w-full min-w-200 border-collapse text-left text-sm; }
+  .data-table th { @apply border-b border-black/6 bg-[#fafaf8] px-5 py-3.5 font-medium text-black/45; }
+  .data-table td { @apply border-b border-black/5 px-5 py-4 text-black/75; }
+  .data-table tbody tr { @apply transition hover:bg-wheat-50/60; }
+}
