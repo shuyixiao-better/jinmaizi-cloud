@@ -16,6 +16,10 @@
 		{
 			"pattern": "jinmaizicloud.shop",
 			"custom_domain": true
+		},
+		{
+			"pattern": "www.jinmaizicloud.shop",
+			"custom_domain": true
 		}
 	],
 	"d1_databases": [
