@@ -12,6 +12,12 @@
 			"/api/*"
 		]
 	},
+	"routes": [
+		{
+			"pattern": "jinmaizicloud.shop",
+			"custom_domain": true
+		}
+	],
 	"d1_databases": [
 		{
 			"binding": "DB",

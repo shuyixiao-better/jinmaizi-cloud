@@ -149,6 +149,8 @@ npm run build
 
 ## 部署到 Cloudflare
 
+生产环境使用自定义域名 `https://jinmaizicloud.shop`。该域名需要先添加到当前 Cloudflare 账号，并在域名注册商处将 Nameserver 修改为 Cloudflare 为该站点分配的两条地址。域名状态变为 Active 后，运行 `npm run deploy`，Wrangler 会自动创建自定义域名记录和 HTTPS 证书。迁移期间原有 `workers.dev` 地址保持可用。
+
 首次部署建议按顺序执行：
 
 ```bash

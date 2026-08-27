@@ -12,6 +12,18 @@ export function dateTime(value: string | null | undefined): string {
   }).format(new Date(value)).replaceAll("/", "-");
 }
 
+export function shanghaiGreeting(value = new Date()): string {
+  const hour = Number(new Intl.DateTimeFormat("en-GB", {
+    timeZone: "Asia/Shanghai",
+    hour: "2-digit",
+    hourCycle: "h23",
+  }).format(value));
+  if (hour < 6) return "凌晨好";
+  if (hour < 12) return "上午好";
+  if (hour < 18) return "下午好";
+  return "晚上好";
+}
+
 export function yuanToCents(input: string): number | null {
   const value = input.trim();
   if (!/^(?:0|[1-9]\d{0,9})(?:\.\d{1,2})?$/.test(value)) return null;
