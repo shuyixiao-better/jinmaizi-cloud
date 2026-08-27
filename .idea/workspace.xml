@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="350a8400-e39a-46b7-bcfe-cf5c8d217cb2" name="更改" comment="fix(worker): 降低密码迭代次数适配Cloudflare Workers&#10;&#10;- 将密码迭代次数从210,000调整为100,000以符合Web Crypto限制&#10;- 修改seed-admin脚本中的迭代次数保持一致&#10;- 更新脚本使用fileURLToPath获取Wrangler路径&#10;- 添加ON CONFLICT处理逻辑确保管理员账户存在性&#10;- 改进错误处理和进程退出状态检查">
+    <list default="true" id="350a8400-e39a-46b7-bcfe-cf5c8d217cb2" name="更改" comment="feat(dashboard): 添加上海时区问候语并更新界面&#10;&#10;- 在 format.ts 中新增 shanghaiGreeting 函数，根据上海时区返回对应问候语&#10;- 在 dashboard.tsx 中导入并使用 shanghaiGreeting 替代固定问候语&#10;- 添加 favicon.svg 图标文件并更新 index.html 引用&#10;- 在 README.md 中补充自定义域名部署说明&#10;- 为 shanghaiGreeting 函数添加单元测试&#10;- 更新 .idea/workspace.xml 中的提交记录和任务信息">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/web/lib/format.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/web/lib/format.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/web/pages/dashboard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/web/pages/dashboard.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wrangler.jsonc" beforeDir="false" afterPath="$PROJECT_DIR$/wrangler.jsonc" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,7 +43,8 @@
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;javascript.preferred.runtime.type.id&quot;: &quot;node&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;vcs.Git&quot;
+    &quot;settings.editor.selected.configurable&quot;: &quot;vcs.Git&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\ShuYixiao\\AppData\\Local\\JetBrains\\WebStorm2026.2\\ts-go-native-preview\\v7.0.0-dev.jetbrains.20260702.4\\node_modules\\@typescript\\native-preview-win32-x64\\lib&quot;
   }
 }</component>
   <component name="SharedIndexes">
@@ -66,7 +62,7 @@
       <option name="presentableId" value="Default" />
       <updated>1773104277617</updated>
       <workItem from="1773104280571" duration="711000" />
-      <workItem from="1787801757172" duration="7157000" />
+      <workItem from="1787801757172" duration="8231000" />
     </task>
     <task id="LOCAL-00001" summary="feat(admin): 添加管理员后台功能模块&#10;&#10;- 实现管理员用户管理功能，包括创建、编辑、启用/禁用子账号&#10;- 添加卡号管理功能，支持创建卡号、设置初始金额和启停卡号&#10;- 集成交易流水查询功能，可按卡号、账号、类型和时间范围筛选&#10;- 实现账号交易统计页面，按业务时区统计子账号资金操作情况&#10;- 设计数据库迁移脚本，包含用户、会话、卡号、交易和审计日志表结构&#10;- 配置审计日志记录机制，追踪所有管理员操作行为&#10;- 添加余额变更触发器，确保交易流水与卡号余额一致性&#10;- 实现交易不可变性约束，防止历史数据被意外修改&#10;- 创建管理员路由模块，集成用户、卡号、交易和审计API端点&#10;- 配置基础环境变量示例文件和Git忽略规则">
       <option name="closed" value="true" />
@@ -92,7 +88,15 @@
       <option name="project" value="LOCAL" />
       <updated>1787820108593</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="feat(dashboard): 添加上海时区问候语并更新界面&#10;&#10;- 在 format.ts 中新增 shanghaiGreeting 函数，根据上海时区返回对应问候语&#10;- 在 dashboard.tsx 中导入并使用 shanghaiGreeting 替代固定问候语&#10;- 添加 favicon.svg 图标文件并更新 index.html 引用&#10;- 在 README.md 中补充自定义域名部署说明&#10;- 为 shanghaiGreeting 函数添加单元测试&#10;- 更新 .idea/workspace.xml 中的提交记录和任务信息">
+      <option name="closed" value="true" />
+      <created>1787824821791</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1787824821791</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -104,6 +108,7 @@
     <MESSAGE value="feat(admin): 添加管理员后台功能模块&#10;&#10;- 实现管理员用户管理功能，包括创建、编辑、启用/禁用子账号&#10;- 添加卡号管理功能，支持创建卡号、设置初始金额和启停卡号&#10;- 集成交易流水查询功能，可按卡号、账号、类型和时间范围筛选&#10;- 实现账号交易统计页面，按业务时区统计子账号资金操作情况&#10;- 设计数据库迁移脚本，包含用户、会话、卡号、交易和审计日志表结构&#10;- 配置审计日志记录机制，追踪所有管理员操作行为&#10;- 添加余额变更触发器，确保交易流水与卡号余额一致性&#10;- 实现交易不可变性约束，防止历史数据被意外修改&#10;- 创建管理员路由模块，集成用户、卡号、交易和审计API端点&#10;- 配置基础环境变量示例文件和Git忽略规则" />
     <MESSAGE value="fix(database): 优化数据库触发器逻辑并更新文档配置&#10;&#10;- 重构 transactions_validate_before_insert 触发器，使用更简洁的 WHERE 条件替代 CASE 语句&#10;- 重写 transactions_apply_balance_after_insert 触发器，分离增加和减少余额的更新逻辑&#10;- 更新 README.md 中关于数据库配置的说明，简化数据库 ID 设置流程&#10;- 添加 .gitattributes 文件强制迁移 SQL 文件使用 LF 换行符以避免 Windows 上的解析问题&#10;- 将 wrangler.jsonc 中的数据库 ID 替换为实际值，便于远程部署使用" />
     <MESSAGE value="fix(worker): 降低密码迭代次数适配Cloudflare Workers&#10;&#10;- 将密码迭代次数从210,000调整为100,000以符合Web Crypto限制&#10;- 修改seed-admin脚本中的迭代次数保持一致&#10;- 更新脚本使用fileURLToPath获取Wrangler路径&#10;- 添加ON CONFLICT处理逻辑确保管理员账户存在性&#10;- 改进错误处理和进程退出状态检查" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix(worker): 降低密码迭代次数适配Cloudflare Workers&#10;&#10;- 将密码迭代次数从210,000调整为100,000以符合Web Crypto限制&#10;- 修改seed-admin脚本中的迭代次数保持一致&#10;- 更新脚本使用fileURLToPath获取Wrangler路径&#10;- 添加ON CONFLICT处理逻辑确保管理员账户存在性&#10;- 改进错误处理和进程退出状态检查" />
+    <MESSAGE value="feat(dashboard): 添加上海时区问候语并更新界面&#10;&#10;- 在 format.ts 中新增 shanghaiGreeting 函数，根据上海时区返回对应问候语&#10;- 在 dashboard.tsx 中导入并使用 shanghaiGreeting 替代固定问候语&#10;- 添加 favicon.svg 图标文件并更新 index.html 引用&#10;- 在 README.md 中补充自定义域名部署说明&#10;- 为 shanghaiGreeting 函数添加单元测试&#10;- 更新 .idea/workspace.xml 中的提交记录和任务信息" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(dashboard): 添加上海时区问候语并更新界面&#10;&#10;- 在 format.ts 中新增 shanghaiGreeting 函数，根据上海时区返回对应问候语&#10;- 在 dashboard.tsx 中导入并使用 shanghaiGreeting 替代固定问候语&#10;- 添加 favicon.svg 图标文件并更新 index.html 引用&#10;- 在 README.md 中补充自定义域名部署说明&#10;- 为 shanghaiGreeting 函数添加单元测试&#10;- 更新 .idea/workspace.xml 中的提交记录和任务信息" />
   </component>
 </project>
