@@ -84,19 +84,13 @@ npx wrangler login
 npx wrangler d1 create jinmaizi-cloud-db
 ```
 
-命令会返回真实 `database_id`。将 [wrangler.jsonc](./wrangler.jsonc) 中的占位值：
-
-```text
-00000000-0000-0000-0000-000000000000
-```
-
-替换为该 ID，然后重新生成绑定类型：
+命令会返回真实 `database_id`。将该 ID 填入 [wrangler.jsonc](./wrangler.jsonc) 的 `DB` 绑定。当前配置已经关联数据库 `jinmaizi-cloud-db`，无需再次创建；更换 Cloudflare 账号或数据库时才需要替换该 ID。配置变化后重新生成绑定类型：
 
 ```bash
 npm run cf-typegen
 ```
 
-真实数据库 ID 不是密码，可以提交到仓库；当前仓库保留占位符，方便首次创建者配置自己的 D1。
+真实数据库 ID 不是密码，可以安全提交到私有仓库。
 
 ## Migration
 
@@ -200,6 +194,16 @@ Vite 构建会生成 Worker 和静态资源的输出配置，Wrangler 会把 Rea
 ### D1 数据库 ID 无效
 
 先运行 `npx wrangler d1 create jinmaizi-cloud-db`，再把返回的真实 ID 写入 `wrangler.jsonc`。
+
+### 远程迁移提示 `incomplete input: SQLITE_ERROR`
+
+这是 Wrangler 在 Windows 上解析 D1 触发器迁移时可能出现的分句问题。仓库已通过 `.gitattributes` 强制 `migrations/*.sql` 使用 LF 换行，并避免在触发器正文中使用容易被误判的 `CASE ... END`。请确认使用修改后的迁移文件，然后重新运行：
+
+```bash
+npm run db:migrate:remote
+```
+
+失败的 D1 Migration 会整体回滚，因此不需要删除或重建刚创建的数据库。
 
 ### 登录后立即回到登录页
 

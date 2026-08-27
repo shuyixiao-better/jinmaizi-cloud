@@ -1,0 +1,2 @@
+# Wrangler remote D1 migrations can misparse trigger bodies when SQL files use CRLF.
+migrations/*.sql text eol=lf

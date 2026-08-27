@@ -1,24 +1,34 @@
 {
-  "$schema": "./node_modules/wrangler/config-schema.json",
-  "name": "jinmaizi-cloud",
-  "main": "./src/worker/index.ts",
-  "compatibility_date": "2026-08-27",
-  "compatibility_flags": ["nodejs_compat"],
-  "assets": {
-    "not_found_handling": "single-page-application",
-    "run_worker_first": ["/api/*"]
-  },
-  "d1_databases": [
-    {
-      "binding": "DB",
-      "database_name": "jinmaizi-cloud-db",
-      "database_id": "00000000-0000-0000-0000-000000000000",
-      "migrations_dir": "migrations"
-    }
-  ],
-  "observability": {
-    "enabled": true,
-    "logs": { "enabled": true, "head_sampling_rate": 1 },
-    "traces": { "enabled": true, "head_sampling_rate": 0.05 }
-  }
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "jinmaizi-cloud",
+	"main": "./src/worker/index.ts",
+	"compatibility_date": "2026-08-27",
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
+	"assets": {
+		"not_found_handling": "single-page-application",
+		"run_worker_first": [
+			"/api/*"
+		]
+	},
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "jinmaizi-cloud-db",
+			"database_id": "bcbcd14d-15da-4dcc-aa8b-fd31967cb32b",
+			"migrations_dir": "migrations"
+		}
+	],
+	"observability": {
+		"enabled": true,
+		"logs": {
+			"enabled": true,
+			"head_sampling_rate": 1
+		},
+		"traces": {
+			"enabled": true,
+			"head_sampling_rate": 0.05
+		}
+	}
 }

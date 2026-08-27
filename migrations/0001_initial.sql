@@ -79,28 +79,35 @@ CREATE INDEX idx_audit_logs_user_id ON audit_logs(user_id);
 CREATE TRIGGER transactions_validate_before_insert
 BEFORE INSERT ON transactions
 BEGIN
-  SELECT CASE WHEN NOT EXISTS (SELECT 1 FROM cards WHERE id = NEW.card_id)
-    THEN RAISE(ABORT, 'CARD_NOT_FOUND') END;
-  SELECT CASE WHEN NEW.transaction_type IN ('INCREASE', 'DECREASE')
-      AND (SELECT status FROM cards WHERE id = NEW.card_id) != 'ACTIVE'
-    THEN RAISE(ABORT, 'CARD_DISABLED') END;
-  SELECT CASE WHEN NEW.transaction_type = 'DECREASE'
-      AND (SELECT balance_cents FROM cards WHERE id = NEW.card_id) < NEW.amount_cents
-    THEN RAISE(ABORT, 'INSUFFICIENT_BALANCE') END;
-  SELECT CASE WHEN NEW.card_no != (SELECT card_no FROM cards WHERE id = NEW.card_id)
-    THEN RAISE(ABORT, 'CARD_SNAPSHOT_MISMATCH') END;
+  SELECT RAISE(ABORT, 'CARD_NOT_FOUND')
+  WHERE NOT EXISTS (SELECT 1 FROM cards WHERE id = NEW.card_id);
+
+  SELECT RAISE(ABORT, 'CARD_DISABLED')
+  WHERE NEW.transaction_type IN ('INCREASE', 'DECREASE')
+    AND (SELECT status FROM cards WHERE id = NEW.card_id) != 'ACTIVE';
+
+  SELECT RAISE(ABORT, 'INSUFFICIENT_BALANCE')
+  WHERE NEW.transaction_type = 'DECREASE'
+    AND (SELECT balance_cents FROM cards WHERE id = NEW.card_id) < NEW.amount_cents;
+
+  SELECT RAISE(ABORT, 'CARD_SNAPSHOT_MISMATCH')
+  WHERE NEW.card_no != (SELECT card_no FROM cards WHERE id = NEW.card_id);
 END;
 
 CREATE TRIGGER transactions_apply_balance_after_insert
 AFTER INSERT ON transactions
 BEGIN
   UPDATE cards
-  SET balance_cents = balance_cents + CASE
-      WHEN NEW.transaction_type IN ('INITIAL', 'INCREASE') THEN NEW.amount_cents
-      ELSE -NEW.amount_cents
-    END,
+  SET balance_cents = balance_cents + NEW.amount_cents,
     updated_at = strftime('%Y-%m-%dT%H:%M:%fZ', 'now')
-  WHERE id = NEW.card_id;
+  WHERE id = NEW.card_id
+    AND NEW.transaction_type IN ('INITIAL', 'INCREASE');
+
+  UPDATE cards
+  SET balance_cents = balance_cents - NEW.amount_cents,
+    updated_at = strftime('%Y-%m-%dT%H:%M:%fZ', 'now')
+  WHERE id = NEW.card_id
+    AND NEW.transaction_type = 'DECREASE';
 END;
 
 CREATE TRIGGER transactions_immutable_update
