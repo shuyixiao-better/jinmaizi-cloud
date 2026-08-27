@@ -1,5 +1,6 @@
 const encoder = new TextEncoder();
-export const PASSWORD_ITERATIONS = 210_000;
+// Cloudflare Workers Web Crypto rejects PBKDF2 iteration counts above 100,000.
+export const PASSWORD_ITERATIONS = 100_000;
 
 function bytesToBase64(bytes: Uint8Array): string {
   let binary = "";

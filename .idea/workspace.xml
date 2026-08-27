@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="350a8400-e39a-46b7-bcfe-cf5c8d217cb2" name="更改" comment="feat(admin): 添加管理员后台功能模块&#10;&#10;- 实现管理员用户管理功能，包括创建、编辑、启用/禁用子账号&#10;- 添加卡号管理功能，支持创建卡号、设置初始金额和启停卡号&#10;- 集成交易流水查询功能，可按卡号、账号、类型和时间范围筛选&#10;- 实现账号交易统计页面，按业务时区统计子账号资金操作情况&#10;- 设计数据库迁移脚本，包含用户、会话、卡号、交易和审计日志表结构&#10;- 配置审计日志记录机制，追踪所有管理员操作行为&#10;- 添加余额变更触发器，确保交易流水与卡号余额一致性&#10;- 实现交易不可变性约束，防止历史数据被意外修改&#10;- 创建管理员路由模块，集成用户、卡号、交易和审计API端点&#10;- 配置基础环境变量示例文件和Git忽略规则">
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/0001_initial.sql" beforeDir="false" afterPath="$PROJECT_DIR$/migrations/0001_initial.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wrangler.jsonc" beforeDir="false" afterPath="$PROJECT_DIR$/wrangler.jsonc" afterDir="false" />
+    <list default="true" id="350a8400-e39a-46b7-bcfe-cf5c8d217cb2" name="更改" comment="fix(database): 优化数据库触发器逻辑并更新文档配置&#10;&#10;- 重构 transactions_validate_before_insert 触发器，使用更简洁的 WHERE 条件替代 CASE 语句&#10;- 重写 transactions_apply_balance_after_insert 触发器，分离增加和减少余额的更新逻辑&#10;- 更新 README.md 中关于数据库配置的说明，简化数据库 ID 设置流程&#10;- 添加 .gitattributes 文件强制迁移 SQL 文件使用 LF 换行符以避免 Windows 上的解析问题&#10;- 将 wrangler.jsonc 中的数据库 ID 替换为实际值，便于远程部署使用">
+      <change beforePath="$PROJECT_DIR$/scripts/seed-admin.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/seed-admin.mjs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,7 +61,7 @@
       <option name="presentableId" value="Default" />
       <updated>1773104277617</updated>
       <workItem from="1773104280571" duration="711000" />
-      <workItem from="1787801757172" duration="3780000" />
+      <workItem from="1787801757172" duration="4175000" />
     </task>
     <task id="LOCAL-00001" summary="feat(admin): 添加管理员后台功能模块&#10;&#10;- 实现管理员用户管理功能，包括创建、编辑、启用/禁用子账号&#10;- 添加卡号管理功能，支持创建卡号、设置初始金额和启停卡号&#10;- 集成交易流水查询功能，可按卡号、账号、类型和时间范围筛选&#10;- 实现账号交易统计页面，按业务时区统计子账号资金操作情况&#10;- 设计数据库迁移脚本，包含用户、会话、卡号、交易和审计日志表结构&#10;- 配置审计日志记录机制，追踪所有管理员操作行为&#10;- 添加余额变更触发器，确保交易流水与卡号余额一致性&#10;- 实现交易不可变性约束，防止历史数据被意外修改&#10;- 创建管理员路由模块，集成用户、卡号、交易和审计API端点&#10;- 配置基础环境变量示例文件和Git忽略规则">
       <option name="closed" value="true" />
@@ -73,7 +71,15 @@
       <option name="project" value="LOCAL" />
       <updated>1787813881074</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="fix(database): 优化数据库触发器逻辑并更新文档配置&#10;&#10;- 重构 transactions_validate_before_insert 触发器，使用更简洁的 WHERE 条件替代 CASE 语句&#10;- 重写 transactions_apply_balance_after_insert 触发器，分离增加和减少余额的更新逻辑&#10;- 更新 README.md 中关于数据库配置的说明，简化数据库 ID 设置流程&#10;- 添加 .gitattributes 文件强制迁移 SQL 文件使用 LF 换行符以避免 Windows 上的解析问题&#10;- 将 wrangler.jsonc 中的数据库 ID 替换为实际值，便于远程部署使用">
+      <option name="closed" value="true" />
+      <created>1787819444936</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1787819444936</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -83,6 +89,7 @@
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
     <MESSAGE value="feat(admin): 添加管理员后台功能模块&#10;&#10;- 实现管理员用户管理功能，包括创建、编辑、启用/禁用子账号&#10;- 添加卡号管理功能，支持创建卡号、设置初始金额和启停卡号&#10;- 集成交易流水查询功能，可按卡号、账号、类型和时间范围筛选&#10;- 实现账号交易统计页面，按业务时区统计子账号资金操作情况&#10;- 设计数据库迁移脚本，包含用户、会话、卡号、交易和审计日志表结构&#10;- 配置审计日志记录机制，追踪所有管理员操作行为&#10;- 添加余额变更触发器，确保交易流水与卡号余额一致性&#10;- 实现交易不可变性约束，防止历史数据被意外修改&#10;- 创建管理员路由模块，集成用户、卡号、交易和审计API端点&#10;- 配置基础环境变量示例文件和Git忽略规则" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(admin): 添加管理员后台功能模块&#10;&#10;- 实现管理员用户管理功能，包括创建、编辑、启用/禁用子账号&#10;- 添加卡号管理功能，支持创建卡号、设置初始金额和启停卡号&#10;- 集成交易流水查询功能，可按卡号、账号、类型和时间范围筛选&#10;- 实现账号交易统计页面，按业务时区统计子账号资金操作情况&#10;- 设计数据库迁移脚本，包含用户、会话、卡号、交易和审计日志表结构&#10;- 配置审计日志记录机制，追踪所有管理员操作行为&#10;- 添加余额变更触发器，确保交易流水与卡号余额一致性&#10;- 实现交易不可变性约束，防止历史数据被意外修改&#10;- 创建管理员路由模块，集成用户、卡号、交易和审计API端点&#10;- 配置基础环境变量示例文件和Git忽略规则" />
+    <MESSAGE value="fix(database): 优化数据库触发器逻辑并更新文档配置&#10;&#10;- 重构 transactions_validate_before_insert 触发器，使用更简洁的 WHERE 条件替代 CASE 语句&#10;- 重写 transactions_apply_balance_after_insert 触发器，分离增加和减少余额的更新逻辑&#10;- 更新 README.md 中关于数据库配置的说明，简化数据库 ID 设置流程&#10;- 添加 .gitattributes 文件强制迁移 SQL 文件使用 LF 换行符以避免 Windows 上的解析问题&#10;- 将 wrangler.jsonc 中的数据库 ID 替换为实际值，便于远程部署使用" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix(database): 优化数据库触发器逻辑并更新文档配置&#10;&#10;- 重构 transactions_validate_before_insert 触发器，使用更简洁的 WHERE 条件替代 CASE 语句&#10;- 重写 transactions_apply_balance_after_insert 触发器，分离增加和减少余额的更新逻辑&#10;- 更新 README.md 中关于数据库配置的说明，简化数据库 ID 设置流程&#10;- 添加 .gitattributes 文件强制迁移 SQL 文件使用 LF 换行符以避免 Windows 上的解析问题&#10;- 将 wrangler.jsonc 中的数据库 ID 替换为实际值，便于远程部署使用" />
   </component>
 </project>
