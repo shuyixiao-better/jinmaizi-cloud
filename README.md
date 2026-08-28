@@ -70,60 +70,194 @@ ADMIN_PASSWORD="请换成强密码" npm run seed:admin -- --username admin
 
 可通过 `--display-name "管理员姓名"` 自定义显示名称。重复用户名会被数据库唯一约束拒绝。
 
-## 创建 Cloudflare D1
+## Cloudflare 部署手册
 
-先登录 Cloudflare：
+生产环境由一个 Cloudflare Worker 同时提供 React 前端、Hono API 和 D1 数据库访问，不需要单独部署前端。当前绑定的生产资源如下：
 
-```bash
+| 项目 | 当前值 |
+| --- | --- |
+| Worker | `jinmaizi-cloud` |
+| D1 数据库 | `jinmaizi-cloud-db` |
+| 主域名 | `https://jinmaizicloud.shop` |
+| `www` 域名 | `https://www.jinmaizicloud.shop` |
+| 健康检查 | `https://jinmaizicloud.shop/api/health` |
+
+### 部署前准备
+
+- Node.js 20 或更高版本
+- npm 10 或更高版本
+- 能管理当前 Cloudflare 账号的浏览器登录权限
+- 在 PowerShell 中进入项目目录：
+
+```powershell
+Set-Location E:\WebstormProjects\jinmaizi-cloud
+```
+
+首次下载项目或 `package-lock.json` 发生变化时安装依赖：
+
+```powershell
+npm install
+```
+
+### 第一次部署到当前 Cloudflare 账号
+
+以下步骤按顺序执行。当前仓库已经配置好 D1 数据库 ID 和两个生产域名，不要重复创建数据库。
+
+#### 1. 登录 Cloudflare
+
+```powershell
 npx wrangler login
+npx wrangler whoami
 ```
 
-创建数据库：
+第一条命令会打开浏览器授权页。授权完成后，`whoami` 应显示正确的 Cloudflare 账号。
 
-```bash
-npx wrangler d1 create jinmaizi-cloud-db
-```
+#### 2. 初始化远程 D1 数据库
 
-命令会返回真实 `database_id`。将该 ID 填入 [wrangler.jsonc](./wrangler.jsonc) 的 `DB` 绑定。当前配置已经关联数据库 `jinmaizi-cloud-db`，无需再次创建；更换 Cloudflare 账号或数据库时才需要替换该 ID。配置变化后重新生成绑定类型：
-
-```bash
-npm run cf-typegen
-```
-
-真实数据库 ID 不是密码，可以安全提交到私有仓库。
-
-## Migration
-
-本地数据库：
-
-```bash
-npm run db:migrate:local
-```
-
-远程 D1：
-
-```bash
+```powershell
 npm run db:migrate:remote
 ```
 
-也可以直接使用 Wrangler：
+Wrangler 会询问是否继续，输入 `y` 或选择 `yes`。迁移记录保存在远程 D1 的 `d1_migrations` 表中；已经成功执行过的迁移不会重复执行。
 
-```bash
-npx wrangler d1 migrations apply jinmaizi-cloud-db --local
-npx wrangler d1 migrations apply jinmaizi-cloud-db --remote
+#### 3. 创建或重置超级管理员
+
+推荐通过临时环境变量提供密码，避免密码直接出现在命令历史中：
+
+```powershell
+$env:ADMIN_PASSWORD="请替换为至少 8 位的强密码"
+npm run seed:admin -- --remote --username admin --display-name "超级管理员"
+Remove-Item Env:ADMIN_PASSWORD
 ```
 
-Wrangler 会用 `d1_migrations` 表记录已执行的迁移，不需要手工建表。
+看到“超级管理员 admin 已创建（远程数据库）”才表示成功。同名管理员已存在时，这条命令会更新密码、恢复启用状态并使旧会话失效，因此也可以用于管理员密码重置。
 
-## 创建远程超级管理员
+#### 4. 构建并发布
 
-远程 Migration 成功后执行：
-
-```bash
-npm run seed:admin -- --remote --username admin --password "请换成强密码" --display-name "超级管理员"
+```powershell
+npm run deploy
 ```
 
-仓库中没有默认用户名或密码，也没有公开注册接口。
+`npm run deploy` 等价于：
+
+```powershell
+npm run build
+npx wrangler deploy
+```
+
+构建过程会同时生成 Worker 和 React 静态资源，Wrangler 随后将二者作为同一个应用发布。部署输出中应包含：
+
+```text
+jinmaizicloud.shop (custom domain)
+www.jinmaizicloud.shop (custom domain)
+```
+
+#### 5. 验证部署
+
+```powershell
+Invoke-RestMethod https://jinmaizicloud.shop/api/health
+Invoke-WebRequest https://jinmaizicloud.shop/login -Method Head
+Invoke-WebRequest https://www.jinmaizicloud.shop/login -Method Head
+```
+
+健康检查应返回 `status: ok`，两个登录地址应返回 HTTP `200`。
+
+### 修改代码后如何重新部署
+
+仅修改前端页面、样式、Worker API 或其他 TypeScript 代码时，不需要重新创建 D1，也不需要重新创建管理员。推荐执行：
+
+```powershell
+npm run typecheck
+npm test
+npm run deploy
+```
+
+如果只需要快速发布，并且已经在本地确认功能正常，最少只需：
+
+```powershell
+npm run deploy
+```
+
+该命令本身会先执行生产构建，构建失败时不会继续发布。发布完成后刷新生产页面即可；静态资源文件名包含内容 Hash，通常不需要手工清理 Cloudflare 缓存。
+
+如果出现登录过期或 `In a non-interactive environment, it's necessary to set a CLOUDFLARE_API_TOKEN`，先重新登录再发布：
+
+```powershell
+npx wrangler login
+npm run deploy
+```
+
+### 数据库结构修改后的部署
+
+只有修改数据库表、索引或触发器时才需要新建 Migration。不要直接手工修改生产数据库结构。
+
+```powershell
+npx wrangler d1 migrations create jinmaizi-cloud-db migration_name
+```
+
+编辑 `migrations` 目录中新生成的 SQL 文件后，先在本地数据库验证：
+
+```powershell
+npm run db:migrate:local
+npm test
+```
+
+生产变更前建议先备份，再执行远程迁移和部署：
+
+```powershell
+npx wrangler d1 export jinmaizi-cloud-db --remote --output backup.sql
+npm run db:migrate:remote
+npm run deploy
+```
+
+数据库迁移应尽量保持向后兼容。普通代码更新没有新增 Migration 时，不要重复运行 `db:migrate:remote`。
+
+### 更换 Cloudflare 账号或重新创建 D1
+
+本项目当前数据库已经存在，正常部署不要执行本节。只有换账号或明确需要新数据库时才运行：
+
+```powershell
+npx wrangler d1 create jinmaizi-cloud-db
+```
+
+将命令返回的 `database_id` 更新到 [wrangler.jsonc](./wrangler.jsonc) 的 `DB` 绑定，然后执行：
+
+```powershell
+npm run cf-typegen
+npm run db:migrate:remote
+```
+
+数据库 ID 不是密码，但应确认它属于当前准备部署的 Cloudflare 账号。
+
+### 域名、DNS 与 SSL
+
+`wrangler.jsonc` 已同时绑定裸域名和 `www` 域名：
+
+```text
+jinmaizicloud.shop
+www.jinmaizicloud.shop
+```
+
+域名注册商处需要使用 Cloudflare 分配的 Nameserver。站点在 Cloudflare 中变为 `Active` 后，`npm run deploy` 会维护两个 Worker Custom Domain。Universal SSL 会自动覆盖 `jinmaizicloud.shop` 和 `*.jinmaizicloud.shop`。
+
+当边缘证书页面显示“待验证（TXT）”且同时提示“Cloudflare 将代表您进行验证，无需执行任何操作”时，不要手工复制 `_acme-challenge` TXT，也不需要购买高级证书。首次签发可能需要一段时间，等待证书状态变为“有效”即可。
+
+### 查看线上日志
+
+```powershell
+npx wrangler tail jinmaizi-cloud
+```
+
+保持命令运行，然后在浏览器中复现问题；终端会显示 Worker 请求和异常日志。按 `Ctrl+C` 停止。
+
+### 查看版本与回滚
+
+```powershell
+npx wrangler versions list
+npx wrangler rollback
+```
+
+回滚只恢复 Worker 代码版本，不会自动回滚 D1 数据库结构或生产数据。因此涉及数据库的发布必须先做好备份并谨慎设计迁移。
 
 ## 环境变量与 Secret
 
@@ -131,7 +265,7 @@ npm run seed:admin -- --remote --username admin --password "请换成强密码" 
 
 如未来增加第三方密钥，请勿写入 `wrangler.jsonc`，生产环境使用：
 
-```bash
+```powershell
 npx wrangler secret put SECRET_NAME
 ```
 
@@ -139,35 +273,13 @@ npx wrangler secret put SECRET_NAME
 
 ## 检查与测试
 
-```bash
+```powershell
 npm run typecheck
 npm test
 npm run build
 ```
 
 测试覆盖正确/错误密码、禁用账号、管理员接口 403、重复卡号、增加、扣减、余额不足、幂等和并发扣减。
-
-## 部署到 Cloudflare
-
-生产环境同时使用自定义域名 `https://jinmaizicloud.shop` 和 `https://www.jinmaizicloud.shop`。该域名需要先添加到当前 Cloudflare 账号，并在域名注册商处将 Nameserver 修改为 Cloudflare 为该站点分配的两条地址。域名状态变为 Active 后，运行 `npm run deploy`，Wrangler 会自动创建两个自定义域名记录和 HTTPS 证书。迁移期间原有 `workers.dev` 地址保持可用。
-
-首次部署建议按顺序执行：
-
-```bash
-npx wrangler login
-npm run db:migrate:remote
-npm run seed:admin -- --remote --username admin --password "请换成强密码"
-npm run deploy
-```
-
-也可以使用需求中指定的命令：
-
-```bash
-npm run build
-npx wrangler deploy
-```
-
-Vite 构建会生成 Worker 和静态资源的输出配置，Wrangler 会把 React SPA 与 Hono API 部署到同一个 Worker。
 
 ## 资金一致性设计
 
