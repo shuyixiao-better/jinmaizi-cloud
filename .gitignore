@@ -9,3 +9,4 @@ worker-configuration.d.ts
 coverage/
 .npm-cache/
 .npm-types/
+.idea/
