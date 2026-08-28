@@ -51,6 +51,18 @@ describe("登录与权限", () => {
     const response = await SELF.fetch("https://example.com/api/admin/users", { headers: { Cookie: cookie } });
     expect(response.status).toBe(403);
   });
+  it("退出登录可重复调用并使会话失效", async () => {
+    const user = await seedUser("SUPER_ADMIN");
+    const { cookie } = await login(user.username, user.password);
+    const request = () => SELF.fetch("https://example.com/api/auth/logout", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Cookie: cookie, Origin: "https://example.com" },
+    });
+
+    expect((await request()).status).toBe(200);
+    expect((await request()).status).toBe(200);
+    expect((await SELF.fetch("https://example.com/api/auth/me", { headers: { Cookie: cookie } })).status).toBe(401);
+  });
 });
 
 describe("卡号与资金操作", () => {

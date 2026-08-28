@@ -1,6 +1,6 @@
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
-import { deleteCookie, setCookie } from "hono/cookie";
+import { deleteCookie, getCookie, setCookie } from "hono/cookie";
 import { z } from "zod";
 import { authMiddleware, SESSION_COOKIE } from "../middleware/auth";
 import { writeAudit } from "../services/audit";
@@ -60,10 +60,18 @@ auth.post("/login", zValidator("json", credentialsSchema), async (c) => {
 auth.use("/me", authMiddleware);
 auth.get("/me", (c) => ok(c, { user: c.get("user") }));
 
-auth.use("/logout", authMiddleware);
 auth.post("/logout", async (c) => {
-  await c.env.DB.prepare("DELETE FROM sessions WHERE token_hash = ?").bind(c.get("sessionTokenHash")).run();
-  await writeAudit(c, "LOGOUT", "AUTH", c.get("user").id);
+  const token = getCookie(c, SESSION_COOKIE);
+  if (token) {
+    const tokenHash = await sha256(token);
+    const actor = await c.env.DB.prepare(
+      `SELECT u.id, u.username
+       FROM sessions s JOIN users u ON u.id = s.user_id
+       WHERE s.token_hash = ?`,
+    ).bind(tokenHash).first<{ id: string; username: string }>();
+    await c.env.DB.prepare("DELETE FROM sessions WHERE token_hash = ?").bind(tokenHash).run();
+    if (actor) await writeAudit(c, "LOGOUT", "AUTH", actor.id, undefined, actor);
+  }
   deleteCookie(c, SESSION_COOKIE, { path: "/" });
   return ok(c, { loggedOut: true });
 });

@@ -17,12 +17,12 @@ const userItems = [
 ] as const;
 
 export function AppLayout() {
-  const { user, refresh } = useAuth();
+  const { user, clear } = useAuth();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   if (!user) return null;
   const items = user.role === "SUPER_ADMIN" ? adminItems : userItems;
-  const logout = async () => { try { await api("/api/auth/logout", json("POST")); } finally { await refresh(); navigate("/login"); } };
+  const logout = async () => { try { await api("/api/auth/logout", json("POST")); } finally { await clear(); navigate("/login"); } };
   const sidebar = <>
     <div className="flex h-19 items-center gap-3 border-b border-white/8 px-5">
       <div className="grid size-9 place-items-center rounded-xl bg-wheat-400 text-[#171611]"><Wheat className="size-5" /></div>
