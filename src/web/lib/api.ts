@@ -20,6 +20,10 @@ export async function api<T>(path: string, init?: RequestInit): Promise<T> {
   return payload.data;
 }
 
-export const json = (method: string, body?: unknown): RequestInit => ({ method, body: body === undefined ? undefined : JSON.stringify(body) });
+export const json = (method: string, body?: unknown): RequestInit => ({
+  method,
+  headers: { "Content-Type": "application/json" },
+  body: body === undefined ? undefined : JSON.stringify(body),
+});
 
 export interface PageData<T> { items: T[]; page: number; pageSize: number; total: number; totalPages: number }
