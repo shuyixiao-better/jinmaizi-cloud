@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { shanghaiGreeting } from "../src/web/lib/format";
+import { previousMonthDateRange, shanghaiGreeting } from "../src/web/lib/format";
 
 describe("shanghaiGreeting", () => {
   it.each([
@@ -9,5 +9,21 @@ describe("shanghaiGreeting", () => {
     ["2026-08-27T12:30:00.000Z", "晚上好"],
   ])("按上海时区将 %s 显示为 %s", (iso, expected) => {
     expect(shanghaiGreeting(new Date(iso))).toBe(expected);
+  });
+});
+
+describe("previousMonthDateRange", () => {
+  it("按上海时区返回上一个完整自然月", () => {
+    expect(previousMonthDateRange(new Date("2026-09-01T00:30:00.000Z"))).toEqual({
+      startDate: "2026-08-01",
+      endDate: "2026-08-31",
+    });
+  });
+
+  it("跨年时返回上一年十二月", () => {
+    expect(previousMonthDateRange(new Date("2026-01-15T00:00:00.000Z"))).toEqual({
+      startDate: "2025-12-01",
+      endDate: "2025-12-31",
+    });
   });
 });

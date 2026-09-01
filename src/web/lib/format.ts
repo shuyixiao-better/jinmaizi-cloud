@@ -12,6 +12,22 @@ export function dateTime(value: string | null | undefined): string {
   }).format(new Date(value)).replaceAll("/", "-");
 }
 
+export function previousMonthDateRange(value = new Date()): { startDate: string; endDate: string } {
+  const parts = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Asia/Shanghai",
+    year: "numeric",
+    month: "2-digit",
+  }).formatToParts(value);
+  const year = Number(parts.find((part) => part.type === "year")?.value);
+  const month = Number(parts.find((part) => part.type === "month")?.value);
+  const firstDay = new Date(Date.UTC(year, month - 2, 1));
+  const lastDay = new Date(Date.UTC(year, month - 1, 0));
+  return {
+    startDate: firstDay.toISOString().slice(0, 10),
+    endDate: lastDay.toISOString().slice(0, 10),
+  };
+}
+
 export function shanghaiGreeting(value = new Date()): string {
   const hour = Number(new Intl.DateTimeFormat("en-GB", {
     timeZone: "Asia/Shanghai",

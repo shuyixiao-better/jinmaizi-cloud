@@ -4,8 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="350a8400-e39a-46b7-bcfe-cf5c8d217cb2" name="更改" comment="feat(admin): 添加卡号修改功能&#10;&#10;- 在 worker 路由中实现卡号修改接口，支持更新卡号和备注信息&#10;- 添加卡号验证 schema 并在创建和修改时复用&#10;- 在前端页面添加修改按钮和弹窗界面，支持卡号和备注编辑&#10;- 实现数据库事务处理，确保卡号修改时余额和状态保持不变&#10;- 添加审计日志记录，追踪卡号修改前后的变化情况&#10;- 编写测试用例验证卡号修改功能和历史流水保留逻辑&#10;- 更新管理界面描述，补充卡号修改操作说明">
+    <list default="true" id="350a8400-e39a-46b7-bcfe-cf5c8d217cb2" name="更改" comment="style(brand): 更新网站图标和品牌标识&#10;&#10;- 将网站图标从SVG格式更改为PNG格式，并更新版本参数&#10;- 在移动端登录界面使用新的品牌logo图片替代文字标识&#10;- 在管理后台布局中替换原有的Wheat图标为品牌logo&#10;- 移除不再使用的Wheat图标导入声明&#10;- 添加苹果设备触控图标链接标签">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/web/lib/format.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/web/lib/format.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/web/pages/admin-transactions.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/web/pages/admin-transactions.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/format.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/tests/format.test.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,6 +33,65 @@
   <component name="McpProjectServerCommands">
     <commands />
     <urls />
+  </component>
+  <component name="NextEditCompletionFeaturesState">
+    <decayedCancelled>
+      <entry key="MS100" value="1.001177528973473" />
+      <entry key="MS500" value="1.4168022300501242" />
+      <entry key="S2" value="3.1018605769943335" />
+      <entry key="S5" value="4.071916277648114" />
+      <entry key="S10" value="4.50154694710173" />
+      <entry key="S30" value="4.825501144861448" />
+      <entry key="S60" value="4.911659822966482" />
+      <entry key="M2" value="4.955553540201576" />
+      <entry key="M5" value="4.982154609425085" />
+      <entry key="M10" value="4.991066130221238" />
+      <entry key="M15" value="4.994041600618223" />
+      <entry key="M30" value="4.997019556466357" />
+      <entry key="H1" value="4.99850946713276" />
+      <entry key="H2" value="4.999254655773802" />
+      <entry key="H4" value="4.9996273084365725" />
+      <entry key="D1" value="4.999937882037808" />
+      <entry key="W1" value="4.999991125939237" />
+    </decayedCancelled>
+    <decayedSelected>
+      <entry key="MS100" value="0.0" />
+      <entry key="MS500" value="0.0" />
+      <entry key="S2" value="0.0" />
+      <entry key="S5" value="0.0" />
+      <entry key="S10" value="0.0" />
+      <entry key="S30" value="0.0" />
+      <entry key="S60" value="0.0" />
+      <entry key="M2" value="0.0" />
+      <entry key="M5" value="0.0" />
+      <entry key="M10" value="0.0" />
+      <entry key="M15" value="0.0" />
+      <entry key="M30" value="0.0" />
+      <entry key="H1" value="0.0" />
+      <entry key="H2" value="0.0" />
+      <entry key="H4" value="0.0" />
+      <entry key="D1" value="0.0" />
+      <entry key="W1" value="0.0" />
+    </decayedSelected>
+    <decayedShown>
+      <entry key="MS100" value="0.967089515432244" />
+      <entry key="MS500" value="1.407306653572102" />
+      <entry key="S2" value="3.095013342535766" />
+      <entry key="S5" value="4.067925914311933" />
+      <entry key="S10" value="4.499260151667072" />
+      <entry key="S30" value="4.824664002258349" />
+      <entry key="S60" value="4.911231189807979" />
+      <entry key="M2" value="4.955336652528126" />
+      <entry key="M5" value="4.982067230042563" />
+      <entry key="M10" value="4.991022335868084" />
+      <entry key="M15" value="4.994012381079228" />
+      <entry key="M30" value="4.997004935033721" />
+      <entry key="H1" value="4.998502153498526" />
+      <entry key="H2" value="4.999250998226939" />
+      <entry key="H4" value="4.99962547948067" />
+      <entry key="D1" value="4.999937577186479" />
+      <entry key="W1" value="4.9999910823884255" />
+    </decayedShown>
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 4,
@@ -78,7 +140,7 @@
       <workItem from="1787801757172" duration="9461000" />
       <workItem from="1787915106567" duration="25000" />
       <workItem from="1787915140098" duration="443000" />
-      <workItem from="1788241338834" duration="2969000" />
+      <workItem from="1788241338834" duration="3906000" />
     </task>
     <task id="LOCAL-00001" summary="feat(admin): 添加管理员后台功能模块&#10;&#10;- 实现管理员用户管理功能，包括创建、编辑、启用/禁用子账号&#10;- 添加卡号管理功能，支持创建卡号、设置初始金额和启停卡号&#10;- 集成交易流水查询功能，可按卡号、账号、类型和时间范围筛选&#10;- 实现账号交易统计页面，按业务时区统计子账号资金操作情况&#10;- 设计数据库迁移脚本，包含用户、会话、卡号、交易和审计日志表结构&#10;- 配置审计日志记录机制，追踪所有管理员操作行为&#10;- 添加余额变更触发器，确保交易流水与卡号余额一致性&#10;- 实现交易不可变性约束，防止历史数据被意外修改&#10;- 创建管理员路由模块，集成用户、卡号、交易和审计API端点&#10;- 配置基础环境变量示例文件和Git忽略规则">
       <option name="closed" value="true" />
@@ -160,7 +222,15 @@
       <option name="project" value="LOCAL" />
       <updated>1788243916795</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="style(brand): 更新网站图标和品牌标识&#10;&#10;- 将网站图标从SVG格式更改为PNG格式，并更新版本参数&#10;- 在移动端登录界面使用新的品牌logo图片替代文字标识&#10;- 在管理后台布局中替换原有的Wheat图标为品牌logo&#10;- 移除不再使用的Wheat图标导入声明&#10;- 添加苹果设备触控图标链接标签">
+      <option name="closed" value="true" />
+      <created>1788244615923</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1788244615923</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -179,6 +249,7 @@
     <MESSAGE value="feat(api): 添加 JSON 请求头并为 API 工具函数增加测试&#10;&#10;- 在 json 函数中添加 Content-Type: application/json 头部&#10;- 为 json 函数创建 Vitest 测试文件&#10;- 添加无请求体时的 Content-Type 验证测试&#10;- 添加请求体序列化为 JSON 的功能测试&#10;- 确保 POST 请求正确设置头部和序列化数据" />
     <MESSAGE value="docs(deploy): 更新 Cloudflare 部署手册&#10;&#10;- 完全重写部署文档，提供详细的生产环境部署流程&#10;- 添加部署前准备、第一次部署、重新部署等完整操作指南&#10;- 增加数据库结构修改、更换账号等高级部署场景说明&#10;- 补充域名 DNS SSL 配置、日志查看、版本回滚等内容&#10;- 将命令示例统一改为 PowerShell 格式&#10;- 删除过时的部署相关章节，整合为完整的部署手册" />
     <MESSAGE value="feat(admin): 添加卡号修改功能&#10;&#10;- 在 worker 路由中实现卡号修改接口，支持更新卡号和备注信息&#10;- 添加卡号验证 schema 并在创建和修改时复用&#10;- 在前端页面添加修改按钮和弹窗界面，支持卡号和备注编辑&#10;- 实现数据库事务处理，确保卡号修改时余额和状态保持不变&#10;- 添加审计日志记录，追踪卡号修改前后的变化情况&#10;- 编写测试用例验证卡号修改功能和历史流水保留逻辑&#10;- 更新管理界面描述，补充卡号修改操作说明" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(admin): 添加卡号修改功能&#10;&#10;- 在 worker 路由中实现卡号修改接口，支持更新卡号和备注信息&#10;- 添加卡号验证 schema 并在创建和修改时复用&#10;- 在前端页面添加修改按钮和弹窗界面，支持卡号和备注编辑&#10;- 实现数据库事务处理，确保卡号修改时余额和状态保持不变&#10;- 添加审计日志记录，追踪卡号修改前后的变化情况&#10;- 编写测试用例验证卡号修改功能和历史流水保留逻辑&#10;- 更新管理界面描述，补充卡号修改操作说明" />
+    <MESSAGE value="style(brand): 更新网站图标和品牌标识&#10;&#10;- 将网站图标从SVG格式更改为PNG格式，并更新版本参数&#10;- 在移动端登录界面使用新的品牌logo图片替代文字标识&#10;- 在管理后台布局中替换原有的Wheat图标为品牌logo&#10;- 移除不再使用的Wheat图标导入声明&#10;- 添加苹果设备触控图标链接标签" />
+    <option name="LAST_COMMIT_MESSAGE" value="style(brand): 更新网站图标和品牌标识&#10;&#10;- 将网站图标从SVG格式更改为PNG格式，并更新版本参数&#10;- 在移动端登录界面使用新的品牌logo图片替代文字标识&#10;- 在管理后台布局中替换原有的Wheat图标为品牌logo&#10;- 移除不再使用的Wheat图标导入声明&#10;- 添加苹果设备触控图标链接标签" />
   </component>
 </project>
