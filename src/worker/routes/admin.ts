@@ -13,6 +13,7 @@ admin.use("/*", authMiddleware, superAdminMiddleware);
 
 const usernameSchema = z.string().trim().regex(/^[A-Za-z0-9_.-]{3,32}$/, "用户名仅支持字母、数字、点、横线和下划线");
 const passwordSchema = z.string().min(8, "密码至少 8 位").max(128);
+const cardNoSchema = z.string().trim().min(3).max(64).regex(/^[A-Za-z0-9_-]+$/, "卡号仅支持字母、数字、横线和下划线");
 
 admin.get("/dashboard", async (c) => {
   const today = presetRange("today");
@@ -157,7 +158,7 @@ admin.get("/cards", async (c) => {
 admin.post(
   "/cards",
   zValidator("json", z.object({
-    cardNo: z.string().trim().min(3).max(64).regex(/^[A-Za-z0-9_-]+$/, "卡号仅支持字母、数字、横线和下划线"),
+    cardNo: cardNoSchema,
     initialAmountCents: z.number().int().positive().max(100_000_000_000),
     remark: z.string().trim().max(500).default(""),
   })),
@@ -185,14 +186,30 @@ admin.post(
 
 admin.put(
   "/cards/:id",
-  zValidator("json", z.object({ remark: z.string().trim().max(500) })),
+  zValidator("json", z.object({
+    cardNo: cardNoSchema.optional(),
+    remark: z.string().trim().max(500).optional(),
+  }).refine((body) => body.cardNo !== undefined || body.remark !== undefined, "至少提供一个要修改的字段")),
   async (c) => {
     const id = c.req.param("id");
-    const result = await c.env.DB.prepare("UPDATE cards SET remark = ?, updated_at = ? WHERE id = ?")
-      .bind(c.req.valid("json").remark, new Date().toISOString(), id).run();
-    if (result.meta.changes === 0) throw new AppError(404, "卡号不存在");
-    await writeAudit(c, "UPDATE_CARD", "CARD", id);
-    return ok(c, { updated: true });
+    const body = c.req.valid("json");
+    const existing = await c.env.DB.prepare("SELECT card_no, remark FROM cards WHERE id = ?").bind(id)
+      .first<{ card_no: string; remark: string }>();
+    if (!existing) throw new AppError(404, "卡号不存在");
+
+    const nextCardNo = body.cardNo ?? existing.card_no;
+    const nextRemark = body.remark ?? existing.remark;
+    try {
+      await c.env.DB.prepare("UPDATE cards SET card_no = ?, remark = ?, updated_at = ? WHERE id = ?")
+        .bind(nextCardNo, nextRemark, new Date().toISOString(), id).run();
+    } catch (error) { throw mapDatabaseError(error) ?? error; }
+
+    await writeAudit(c, "UPDATE_CARD", "CARD", id, {
+      oldCardNo: existing.card_no,
+      newCardNo: nextCardNo,
+      remarkChanged: nextRemark !== existing.remark,
+    });
+    return ok(c, { updated: true, cardNo: nextCardNo });
   },
 );
 

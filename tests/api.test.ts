@@ -72,6 +72,42 @@ describe("卡号与资金操作", () => {
     const duplicate = await SELF.fetch("https://example.com/api/admin/cards", { method: "POST", headers: { "Content-Type": "application/json", Cookie: cookie, Origin: "https://example.com" }, body: JSON.stringify({ cardNo: card.cardNo, initialAmountCents: 100, remark: "重复" }) });
     expect(card.response.status).toBe(201); expect(duplicate.status).toBe(409);
   });
+  it("管理员可修正卡号且历史流水保留原卡号快照", async () => {
+    const admin = await seedUser("SUPER_ADMIN"); const { cookie } = await login(admin.username, admin.password);
+    const card = await createCard(cookie, 10_000);
+    const newCardNo = `FIXED${crypto.randomUUID().replaceAll("-", "").slice(0, 12)}`;
+
+    const response = await SELF.fetch(`https://example.com/api/admin/cards/${card.id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json", Cookie: cookie, Origin: "https://example.com" },
+      body: JSON.stringify({ cardNo: newCardNo }),
+    });
+
+    expect(response.status).toBe(200);
+    const current = await env.DB.prepare("SELECT card_no, balance_cents FROM cards WHERE id = ?").bind(card.id)
+      .first<{ card_no: string; balance_cents: number }>();
+    const initial = await env.DB.prepare("SELECT card_no FROM transactions WHERE card_id = ? AND transaction_type = 'INITIAL'").bind(card.id)
+      .first<{ card_no: string }>();
+    const audit = await env.DB.prepare("SELECT details FROM audit_logs WHERE resource_id = ? AND action = 'UPDATE_CARD' ORDER BY created_at DESC LIMIT 1").bind(card.id)
+      .first<{ details: string }>();
+    expect(current).toEqual({ card_no: newCardNo, balance_cents: 10_000 });
+    expect(initial?.card_no).toBe(card.cardNo);
+    expect(JSON.parse(audit?.details ?? "{}")).toMatchObject({ oldCardNo: card.cardNo, newCardNo });
+  });
+  it("修改为已存在卡号时返回冲突且原卡号不变", async () => {
+    const admin = await seedUser("SUPER_ADMIN"); const { cookie } = await login(admin.username, admin.password);
+    const first = await createCard(cookie); const second = await createCard(cookie);
+
+    const response = await SELF.fetch(`https://example.com/api/admin/cards/${first.id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json", Cookie: cookie, Origin: "https://example.com" },
+      body: JSON.stringify({ cardNo: second.cardNo }),
+    });
+
+    expect(response.status).toBe(409);
+    const current = await env.DB.prepare("SELECT card_no FROM cards WHERE id = ?").bind(first.id).first<{ card_no: string }>();
+    expect(current?.card_no).toBe(first.cardNo);
+  });
   it("增加、扣减、余额不足和幂等均保持账实一致", async () => {
     const admin = await seedUser("SUPER_ADMIN"); const { cookie: adminCookie } = await login(admin.username, admin.password);
     const card = await createCard(adminCookie, 10_000);
