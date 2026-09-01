@@ -1,6 +1,6 @@
 import {
   Activity, CreditCard, FileClock, LayoutDashboard, LogOut, Menu, Search, ShieldCheck,
-  UserRound, Users, WalletCards, Wheat, X,
+  UserRound, Users, WalletCards, X,
 } from "lucide-react";
 import { useState } from "react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
@@ -25,7 +25,7 @@ export function AppLayout() {
   const logout = async () => { try { await api("/api/auth/logout", json("POST")); } finally { await clear(); navigate("/login"); } };
   const sidebar = <>
     <div className="flex h-19 items-center gap-3 border-b border-white/8 px-5">
-      <div className="grid size-9 place-items-center rounded-xl bg-wheat-400 text-[#171611]"><Wheat className="size-5" /></div>
+      <img src="/brand/golden-wheat-logo.png" alt="Golden Wheat Hotel" className="size-12 shrink-0 object-contain" />
       <div><div className="font-bold tracking-wide text-white">金麦子云系统</div><div className="mt-0.5 text-[10px] tracking-[.2em] text-white/35">JINMAIZI CLOUD</div></div>
       <button className="ml-auto text-white/50 lg:hidden" onClick={() => setOpen(false)}><X /></button>
     </div>

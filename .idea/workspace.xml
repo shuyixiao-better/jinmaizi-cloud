@@ -4,11 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="350a8400-e39a-46b7-bcfe-cf5c8d217cb2" name="更改" comment="docs(deploy): 更新 Cloudflare 部署手册&#10;&#10;- 完全重写部署文档，提供详细的生产环境部署流程&#10;- 添加部署前准备、第一次部署、重新部署等完整操作指南&#10;- 增加数据库结构修改、更换账号等高级部署场景说明&#10;- 补充域名 DNS SSL 配置、日志查看、版本回滚等内容&#10;- 将命令示例统一改为 PowerShell 格式&#10;- 删除过时的部署相关章节，整合为完整的部署手册">
+    <list default="true" id="350a8400-e39a-46b7-bcfe-cf5c8d217cb2" name="更改" comment="feat(admin): 添加卡号修改功能&#10;&#10;- 在 worker 路由中实现卡号修改接口，支持更新卡号和备注信息&#10;- 添加卡号验证 schema 并在创建和修改时复用&#10;- 在前端页面添加修改按钮和弹窗界面，支持卡号和备注编辑&#10;- 实现数据库事务处理，确保卡号修改时余额和状态保持不变&#10;- 添加审计日志记录，追踪卡号修改前后的变化情况&#10;- 编写测试用例验证卡号修改功能和历史流水保留逻辑&#10;- 更新管理界面描述，补充卡号修改操作说明">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/web/pages/admin-cards.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/web/pages/admin-cards.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/worker/routes/admin.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/worker/routes/admin.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/api.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/tests/api.test.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,7 +57,7 @@
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "settings.editor.selected.configurable": "vcs.Git",
-    "ts.external.directory.path": "C:\\Users\\ShuYixiao\\AppData\\Local\\JetBrains\\WebStorm2026.2\\ts-go-native-preview\\v7.0.0-dev.jetbrains.20260702.4\\node_modules\\@typescript\\native-preview-win32-x64\\lib"
+    "ts.external.directory.path": "/Users/shuyixiao/WebstormProjects/jinmaizi-cloud/node_modules/@typescript/typescript-darwin-arm64/lib"
   }
 }]]></component>
   <component name="SharedIndexes">
@@ -81,7 +78,7 @@
       <workItem from="1787801757172" duration="9461000" />
       <workItem from="1787915106567" duration="25000" />
       <workItem from="1787915140098" duration="443000" />
-      <workItem from="1788241338834" duration="2352000" />
+      <workItem from="1788241338834" duration="2969000" />
     </task>
     <task id="LOCAL-00001" summary="feat(admin): 添加管理员后台功能模块&#10;&#10;- 实现管理员用户管理功能，包括创建、编辑、启用/禁用子账号&#10;- 添加卡号管理功能，支持创建卡号、设置初始金额和启停卡号&#10;- 集成交易流水查询功能，可按卡号、账号、类型和时间范围筛选&#10;- 实现账号交易统计页面，按业务时区统计子账号资金操作情况&#10;- 设计数据库迁移脚本，包含用户、会话、卡号、交易和审计日志表结构&#10;- 配置审计日志记录机制，追踪所有管理员操作行为&#10;- 添加余额变更触发器，确保交易流水与卡号余额一致性&#10;- 实现交易不可变性约束，防止历史数据被意外修改&#10;- 创建管理员路由模块，集成用户、卡号、交易和审计API端点&#10;- 配置基础环境变量示例文件和Git忽略规则">
       <option name="closed" value="true" />
@@ -155,7 +152,15 @@
       <option name="project" value="LOCAL" />
       <updated>1787915580707</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="feat(admin): 添加卡号修改功能&#10;&#10;- 在 worker 路由中实现卡号修改接口，支持更新卡号和备注信息&#10;- 添加卡号验证 schema 并在创建和修改时复用&#10;- 在前端页面添加修改按钮和弹窗界面，支持卡号和备注编辑&#10;- 实现数据库事务处理，确保卡号修改时余额和状态保持不变&#10;- 添加审计日志记录，追踪卡号修改前后的变化情况&#10;- 编写测试用例验证卡号修改功能和历史流水保留逻辑&#10;- 更新管理界面描述，补充卡号修改操作说明">
+      <option name="closed" value="true" />
+      <created>1788243916795</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1788243916795</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -173,6 +178,7 @@
     <MESSAGE value="chore(ide): 更新IDE工作空间配置以忽略.idea目录&#10;&#10;- 在.gitignore中添加.idea/目录忽略规则&#10;- 更新workspace.xml中的提交记录和任务信息&#10;- 修改最近提交消息记录为当前配置变更&#10;- 调整工作时间统计和本地任务计数器&#10;- 更新PropertiesComponent组件的数据结构&#10;- 添加typescript外部目录路径配置" />
     <MESSAGE value="feat(api): 添加 JSON 请求头并为 API 工具函数增加测试&#10;&#10;- 在 json 函数中添加 Content-Type: application/json 头部&#10;- 为 json 函数创建 Vitest 测试文件&#10;- 添加无请求体时的 Content-Type 验证测试&#10;- 添加请求体序列化为 JSON 的功能测试&#10;- 确保 POST 请求正确设置头部和序列化数据" />
     <MESSAGE value="docs(deploy): 更新 Cloudflare 部署手册&#10;&#10;- 完全重写部署文档，提供详细的生产环境部署流程&#10;- 添加部署前准备、第一次部署、重新部署等完整操作指南&#10;- 增加数据库结构修改、更换账号等高级部署场景说明&#10;- 补充域名 DNS SSL 配置、日志查看、版本回滚等内容&#10;- 将命令示例统一改为 PowerShell 格式&#10;- 删除过时的部署相关章节，整合为完整的部署手册" />
-    <option name="LAST_COMMIT_MESSAGE" value="docs(deploy): 更新 Cloudflare 部署手册&#10;&#10;- 完全重写部署文档，提供详细的生产环境部署流程&#10;- 添加部署前准备、第一次部署、重新部署等完整操作指南&#10;- 增加数据库结构修改、更换账号等高级部署场景说明&#10;- 补充域名 DNS SSL 配置、日志查看、版本回滚等内容&#10;- 将命令示例统一改为 PowerShell 格式&#10;- 删除过时的部署相关章节，整合为完整的部署手册" />
+    <MESSAGE value="feat(admin): 添加卡号修改功能&#10;&#10;- 在 worker 路由中实现卡号修改接口，支持更新卡号和备注信息&#10;- 添加卡号验证 schema 并在创建和修改时复用&#10;- 在前端页面添加修改按钮和弹窗界面，支持卡号和备注编辑&#10;- 实现数据库事务处理，确保卡号修改时余额和状态保持不变&#10;- 添加审计日志记录，追踪卡号修改前后的变化情况&#10;- 编写测试用例验证卡号修改功能和历史流水保留逻辑&#10;- 更新管理界面描述，补充卡号修改操作说明" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(admin): 添加卡号修改功能&#10;&#10;- 在 worker 路由中实现卡号修改接口，支持更新卡号和备注信息&#10;- 添加卡号验证 schema 并在创建和修改时复用&#10;- 在前端页面添加修改按钮和弹窗界面，支持卡号和备注编辑&#10;- 实现数据库事务处理，确保卡号修改时余额和状态保持不变&#10;- 添加审计日志记录，追踪卡号修改前后的变化情况&#10;- 编写测试用例验证卡号修改功能和历史流水保留逻辑&#10;- 更新管理界面描述，补充卡号修改操作说明" />
   </component>
 </project>
