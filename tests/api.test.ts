@@ -108,20 +108,20 @@ describe("卡号与资金操作", () => {
     const current = await env.DB.prepare("SELECT card_no FROM cards WHERE id = ?").bind(first.id).first<{ card_no: string }>();
     expect(current?.card_no).toBe(first.cardNo);
   });
-  it("增加、扣减、余额不足和幂等均保持账实一致", async () => {
+  it("子账号不能增加余额，扣减、余额不足和幂等均保持账实一致", async () => {
     const admin = await seedUser("SUPER_ADMIN"); const { cookie: adminCookie } = await login(admin.username, admin.password);
     const card = await createCard(adminCookie, 10_000);
     const account = await seedUser("SUB_ACCOUNT"); const { cookie } = await login(account.username, account.password);
-    const operate = (type: "increase" | "decrease", amountCents: number, requestId = crypto.randomUUID()) => SELF.fetch(`https://example.com/api/cards/${card.id}/${type}`, { method: "POST", headers: { "Content-Type": "application/json", Cookie: cookie, Origin: "https://example.com" }, body: JSON.stringify({ requestId, amountCents, remark: "测试" }) });
-    expect((await operate("increase", 5_000)).status).toBe(200);
+    const operate = (path: "increase" | "decrease", amountCents: number, requestId = crypto.randomUUID()) => SELF.fetch(`https://example.com/api/cards/${card.id}/${path}`, { method: "POST", headers: { "Content-Type": "application/json", Cookie: cookie, Origin: "https://example.com" }, body: JSON.stringify({ requestId, amountCents, remark: "测试" }) });
+    expect((await operate("increase", 5_000)).status).toBe(404);
     expect((await operate("decrease", 3_000)).status).toBe(200);
     expect((await operate("decrease", 20_000)).status).toBe(409);
     const requestId = crypto.randomUUID();
-    expect((await operate("increase", 1_000, requestId)).status).toBe(200);
-    expect((await operate("increase", 1_000, requestId)).status).toBe(200);
+    expect((await operate("decrease", 1_000, requestId)).status).toBe(200);
+    expect((await operate("decrease", 1_000, requestId)).status).toBe(200);
     const balance = await env.DB.prepare("SELECT balance_cents FROM cards WHERE id = ?").bind(card.id).first<{ balance_cents: number }>();
     const count = await env.DB.prepare("SELECT COUNT(*) count FROM transactions WHERE request_id = ?").bind(requestId).first<{ count: number }>();
-    expect(balance?.balance_cents).toBe(13_000); expect(count?.count).toBe(1);
+    expect(balance?.balance_cents).toBe(6_000); expect(count?.count).toBe(1);
   });
   it("并发扣减只允许一笔成功", async () => {
     const admin = await seedUser("SUPER_ADMIN"); const { cookie: adminCookie } = await login(admin.username, admin.password);

@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="350a8400-e39a-46b7-bcfe-cf5c8d217cb2" name="更改" comment="remove(login): 移除登录页面底部Cloudflare标识&#10;&#10;- 删除了 &quot;Powered by Cloudflare Workers &amp; D1&quot; 文本&#10;- 更新了IDEA工作空间中的任务持续时间记录&#10;- 添加了新的本地任务记录用于交易流水功能开发" />
+    <list default="true" id="350a8400-e39a-46b7-bcfe-cf5c8d217cb2" name="更改" comment="feat(admin): 将交易流水导出功能从图片改为Excel格式&#10;&#10;- 将exportImage函数重命名为exportExcel&#10;- 更新下载逻辑以使用Excel格式而不是图片格式&#10;- 修改页面描述文本，将&quot;下载打印图片&quot;改为&quot;下载Excel明细&quot;&#10;- 更新按钮文本和加载状态提示，显示&quot;下载Excel&quot;和&quot;正在生成Excel&quot;&#10;- 更改成功消息显示为&quot;已下载X笔交易流水Excel文件&quot;&#10;- 添加ExcelJS依赖包用于Excel文件生成&#10;- 添加transactionReportFilename测试用例验证Excel文件名生成&#10;- 在package.json中配置uuid版本覆盖以确保安全性" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -31,23 +31,23 @@
   </component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.0040057995416822" />
-      <entry key="MS500" value="1.5407529322283415" />
-      <entry key="S2" value="4.419788617817554" />
-      <entry key="S5" value="6.938020968309448" />
-      <entry key="S10" value="8.274197016430024" />
-      <entry key="S30" value="9.37413969585443" />
-      <entry key="S60" value="9.68022144255525" />
-      <entry key="M2" value="9.838356413761426" />
-      <entry key="M5" value="9.93491600080754" />
-      <entry key="M10" value="9.967386439913374" />
-      <entry key="M15" value="9.978241689534515" />
-      <entry key="M30" value="9.989112867525218" />
-      <entry key="H1" value="9.994554437818156" />
-      <entry key="H2" value="9.997276719718563" />
-      <entry key="H4" value="9.998638235036095" />
-      <entry key="D1" value="9.99977302183396" />
-      <entry key="W1" value="9.99996757412306" />
+      <entry key="MS100" value="1.00176026619155" />
+      <entry key="MS500" value="1.3430054430527016" />
+      <entry key="S2" value="4.144973105427616" />
+      <entry key="S5" value="8.189846851857052" />
+      <entry key="S10" value="10.912947976450123" />
+      <entry key="S30" value="13.44476504661024" />
+      <entry key="S60" value="14.19506759086811" />
+      <entry key="M2" value="14.590436585384515" />
+      <entry key="M5" value="14.834435638165678" />
+      <entry key="M10" value="14.916924958292299" />
+      <entry key="M15" value="14.944551332350624" />
+      <entry key="M30" value="14.9722429561393" />
+      <entry key="H1" value="14.98611328989579" />
+      <entry key="H2" value="14.9930545965697" />
+      <entry key="H4" value="14.996526786023363" />
+      <entry key="D1" value="14.999421059842287" />
+      <entry key="W1" value="14.999917292520271" />
     </decayedCancelled>
     <decayedSelected>
       <entry key="MS100" value="0.0" />
@@ -69,23 +69,23 @@
       <entry key="W1" value="0.0" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="0.969425356201311" />
-      <entry key="MS500" value="1.520987487307432" />
-      <entry key="S2" value="4.398502287724699" />
-      <entry key="S5" value="6.924266872781924" />
-      <entry key="S10" value="8.265980776005595" />
-      <entry key="S30" value="9.371039436694506" />
-      <entry key="S60" value="9.67862141107748" />
-      <entry key="M2" value="9.837543537964759" />
-      <entry key="M5" value="9.934587713444268" />
-      <entry key="M10" value="9.967221769111775" />
-      <entry key="M15" value="9.978131791543206" />
-      <entry key="M30" value="9.989057859721115" />
-      <entry key="H1" value="9.994526919198972" />
-      <entry key="H2" value="9.99726295672781" />
-      <entry key="H4" value="9.99863135262019" />
-      <entry key="D1" value="9.99977187463677" />
-      <entry key="W1" value="9.999967410234614" />
+      <entry key="MS100" value="0.9743435075704164" />
+      <entry key="MS500" value="1.333645631114766" />
+      <entry key="S2" value="4.125805948708135" />
+      <entry key="S5" value="8.172301897291776" />
+      <entry key="S10" value="10.900978125889045" />
+      <entry key="S30" value="13.439806402080825" />
+      <entry key="S60" value="14.192446419992713" />
+      <entry key="M2" value="14.589088765514733" />
+      <entry key="M5" value="14.833887337027077" />
+      <entry key="M10" value="14.916649258678193" />
+      <entry key="M15" value="14.944367186865085" />
+      <entry key="M30" value="14.972150710145943" />
+      <entry key="H1" value="14.98606712351522" />
+      <entry key="H2" value="14.993031502524525" />
+      <entry key="H4" value="14.996515236285932" />
+      <entry key="D1" value="14.999419134508894" />
+      <entry key="W1" value="14.999917017463405" />
     </decayedShown>
   </component>
   <component name="ProjectColorInfo">{
@@ -137,6 +137,7 @@
       <workItem from="1787915140098" duration="443000" />
       <workItem from="1788241338834" duration="4792000" />
       <workItem from="1788254368276" duration="82000" />
+      <workItem from="1788322474039" duration="663000" />
     </task>
     <task id="LOCAL-00001" summary="feat(admin): 添加管理员后台功能模块&#10;&#10;- 实现管理员用户管理功能，包括创建、编辑、启用/禁用子账号&#10;- 添加卡号管理功能，支持创建卡号、设置初始金额和启停卡号&#10;- 集成交易流水查询功能，可按卡号、账号、类型和时间范围筛选&#10;- 实现账号交易统计页面，按业务时区统计子账号资金操作情况&#10;- 设计数据库迁移脚本，包含用户、会话、卡号、交易和审计日志表结构&#10;- 配置审计日志记录机制，追踪所有管理员操作行为&#10;- 添加余额变更触发器，确保交易流水与卡号余额一致性&#10;- 实现交易不可变性约束，防止历史数据被意外修改&#10;- 创建管理员路由模块，集成用户、卡号、交易和审计API端点&#10;- 配置基础环境变量示例文件和Git忽略规则">
       <option name="closed" value="true" />
@@ -250,7 +251,15 @@
       <option name="project" value="LOCAL" />
       <updated>1788254397243</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="feat(admin): 将交易流水导出功能从图片改为Excel格式&#10;&#10;- 将exportImage函数重命名为exportExcel&#10;- 更新下载逻辑以使用Excel格式而不是图片格式&#10;- 修改页面描述文本，将&quot;下载打印图片&quot;改为&quot;下载Excel明细&quot;&#10;- 更新按钮文本和加载状态提示，显示&quot;下载Excel&quot;和&quot;正在生成Excel&quot;&#10;- 更改成功消息显示为&quot;已下载X笔交易流水Excel文件&quot;&#10;- 添加ExcelJS依赖包用于Excel文件生成&#10;- 添加transactionReportFilename测试用例验证Excel文件名生成&#10;- 在package.json中配置uuid版本覆盖以确保安全性">
+      <option name="closed" value="true" />
+      <created>1788322502857</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1788322502857</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -272,6 +281,7 @@
     <MESSAGE value="style(brand): 更新网站图标和品牌标识&#10;&#10;- 将网站图标从SVG格式更改为PNG格式，并更新版本参数&#10;- 在移动端登录界面使用新的品牌logo图片替代文字标识&#10;- 在管理后台布局中替换原有的Wheat图标为品牌logo&#10;- 移除不再使用的Wheat图标导入声明&#10;- 添加苹果设备触控图标链接标签" />
     <MESSAGE value="feat(admin): 添加交易流水日期筛选和导出功能&#10;&#10;- 实现自定义日期范围筛选功能，支持精确到天的交易查询&#10;- 添加上个月快捷选择按钮，方便快速定位常见时间范围&#10;- 实现交易流水导出为PNG图片功能，支持大容量数据分页导出&#10;- 新增日期验证逻辑，防止开始日期晚于结束日期的错误输入&#10;- 添加导出进度提示和成功/错误消息反馈&#10;- 优化页面布局，调整筛选条件展示方式提升用户体验&#10;- 创建交易报告生成工具，实现专业的财务报表样式输出&#10;- 添加上海时区的日期处理工具函数及相应测试用例" />
     <MESSAGE value="remove(login): 移除登录页面底部Cloudflare标识&#10;&#10;- 删除了 &quot;Powered by Cloudflare Workers &amp; D1&quot; 文本&#10;- 更新了IDEA工作空间中的任务持续时间记录&#10;- 添加了新的本地任务记录用于交易流水功能开发" />
-    <option name="LAST_COMMIT_MESSAGE" value="remove(login): 移除登录页面底部Cloudflare标识&#10;&#10;- 删除了 &quot;Powered by Cloudflare Workers &amp; D1&quot; 文本&#10;- 更新了IDEA工作空间中的任务持续时间记录&#10;- 添加了新的本地任务记录用于交易流水功能开发" />
+    <MESSAGE value="feat(admin): 将交易流水导出功能从图片改为Excel格式&#10;&#10;- 将exportImage函数重命名为exportExcel&#10;- 更新下载逻辑以使用Excel格式而不是图片格式&#10;- 修改页面描述文本，将&quot;下载打印图片&quot;改为&quot;下载Excel明细&quot;&#10;- 更新按钮文本和加载状态提示，显示&quot;下载Excel&quot;和&quot;正在生成Excel&quot;&#10;- 更改成功消息显示为&quot;已下载X笔交易流水Excel文件&quot;&#10;- 添加ExcelJS依赖包用于Excel文件生成&#10;- 添加transactionReportFilename测试用例验证Excel文件名生成&#10;- 在package.json中配置uuid版本覆盖以确保安全性" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(admin): 将交易流水导出功能从图片改为Excel格式&#10;&#10;- 将exportImage函数重命名为exportExcel&#10;- 更新下载逻辑以使用Excel格式而不是图片格式&#10;- 修改页面描述文本，将&quot;下载打印图片&quot;改为&quot;下载Excel明细&quot;&#10;- 更新按钮文本和加载状态提示，显示&quot;下载Excel&quot;和&quot;正在生成Excel&quot;&#10;- 更改成功消息显示为&quot;已下载X笔交易流水Excel文件&quot;&#10;- 添加ExcelJS依赖包用于Excel文件生成&#10;- 添加transactionReportFilename测试用例验证Excel文件名生成&#10;- 在package.json中配置uuid版本覆盖以确保安全性" />
   </component>
 </project>

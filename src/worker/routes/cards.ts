@@ -35,8 +35,8 @@ async function operateCard(
   c: Context<{ Bindings: AppBindings; Variables: AppVariables }>,
   cardId: string,
   body: OperationBody,
-  transactionType: "INCREASE" | "DECREASE",
 ) {
+  const transactionType = "DECREASE" as const;
   const user = c.get("user");
   const { requestId, amountCents, remark } = body;
   const existing = await c.env.DB.prepare(
@@ -79,7 +79,6 @@ async function operateCard(
   return ok(c, { transactionId, balanceCents: updated?.balance_cents ?? 0, idempotent: false });
 }
 
-cards.post("/:id/increase", zValidator("json", operationSchema), (c) => operateCard(c, c.req.param("id"), c.req.valid("json"), "INCREASE"));
-cards.post("/:id/decrease", zValidator("json", operationSchema), (c) => operateCard(c, c.req.param("id"), c.req.valid("json"), "DECREASE"));
+cards.post("/:id/decrease", zValidator("json", operationSchema), (c) => operateCard(c, c.req.param("id"), c.req.valid("json")));
 
 export default cards;
