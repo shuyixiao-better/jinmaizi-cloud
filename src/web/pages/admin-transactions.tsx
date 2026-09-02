@@ -63,7 +63,7 @@ export function AdminTransactionsPage() {
     applyFilters(dates);
   };
 
-  const exportImage = async () => {
+  const exportExcel = async () => {
     const dates = { startDate, endDate };
     if (!validateDates(dates)) return;
     const params = transactionParams(cardNo, userId, type, dates);
@@ -81,8 +81,8 @@ export function AdminTransactionsPage() {
         const result = await api<PageData<Transaction>>(`/api/admin/transactions?${params}`);
         items.push(...result.items);
       }
-      const imageCount = await downloadTransactionReport(items, dates.startDate, dates.endDate);
-      setNotice({ type: "success", text: imageCount === 1 ? `已下载 ${items.length} 笔交易流水图片` : `流水较多，已完整下载为 ${imageCount} 张编号图片` });
+      await downloadTransactionReport(items, dates.startDate, dates.endDate);
+      setNotice({ type: "success", text: `已下载 ${items.length} 笔交易流水 Excel 文件` });
     } catch (error) {
       setNotice({ type: "error", text: error instanceof Error ? error.message : "导出失败，请稍后重试" });
     } finally { setExporting(false); }
@@ -90,7 +90,7 @@ export function AdminTransactionsPage() {
 
   if (query.isLoading) return <LoadingPage />;
   return <>
-    <PageHeader title="交易流水" description="按日期查询全部不可变交易记录，并下载打印图片" />
+    <PageHeader title="交易流水" description="按日期查询全部不可变交易记录，并下载 Excel 明细" />
     <div className="panel overflow-hidden">
       <form onSubmit={submit} className="border-b border-black/5 p-5">
         <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-[1.2fr_1fr_.8fr_1fr_1fr]">
@@ -103,7 +103,7 @@ export function AdminTransactionsPage() {
         <div className="mt-4 flex flex-wrap items-center gap-3">
           <button type="button" className="btn-secondary" onClick={selectPreviousMonth}><CalendarRange className="size-4" />上个月</button>
           <button className="btn-secondary"><Filter className="size-4" />查询</button>
-          <button type="button" className="btn-primary" disabled={exporting} onClick={exportImage}>{exporting ? <Spinner /> : <Download className="size-4" />}{exporting ? "正在生成图片" : "下载打印图片"}</button>
+          <button type="button" className="btn-primary" disabled={exporting} onClick={exportExcel}>{exporting ? <Spinner /> : <Download className="size-4" />}{exporting ? "正在生成 Excel" : "下载 Excel"}</button>
           <span className="ml-auto text-sm text-black/40">当前共 {query.data?.total ?? 0} 笔</span>
         </div>
         {notice && <div className="mt-4"><Message type={notice.type}>{notice.text}</Message></div>}

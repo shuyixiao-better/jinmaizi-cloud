@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { previousMonthDateRange, shanghaiGreeting } from "../src/web/lib/format";
+import { transactionReportFilename } from "../src/web/lib/transaction-report";
 
 describe("shanghaiGreeting", () => {
   it.each([
@@ -25,5 +26,11 @@ describe("previousMonthDateRange", () => {
       startDate: "2025-12-01",
       endDate: "2025-12-31",
     });
+  });
+});
+
+describe("transactionReportFilename", () => {
+  it("使用所选日期范围生成 Excel 文件名", () => {
+    expect(transactionReportFilename("2026-08-01", "2026-08-31")).toBe("交易流水_2026-08-01至2026-08-31.xlsx");
   });
 });

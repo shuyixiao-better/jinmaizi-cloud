@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="350a8400-e39a-46b7-bcfe-cf5c8d217cb2" name="更改" comment="feat(admin): 添加交易流水日期筛选和导出功能&#10;&#10;- 实现自定义日期范围筛选功能，支持精确到天的交易查询&#10;- 添加上个月快捷选择按钮，方便快速定位常见时间范围&#10;- 实现交易流水导出为PNG图片功能，支持大容量数据分页导出&#10;- 新增日期验证逻辑，防止开始日期晚于结束日期的错误输入&#10;- 添加导出进度提示和成功/错误消息反馈&#10;- 优化页面布局，调整筛选条件展示方式提升用户体验&#10;- 创建交易报告生成工具，实现专业的财务报表样式输出&#10;- 添加上海时区的日期处理工具函数及相应测试用例" />
+    <list default="true" id="350a8400-e39a-46b7-bcfe-cf5c8d217cb2" name="更改" comment="remove(login): 移除登录页面底部Cloudflare标识&#10;&#10;- 删除了 &quot;Powered by Cloudflare Workers &amp; D1&quot; 文本&#10;- 更新了IDEA工作空间中的任务持续时间记录&#10;- 添加了新的本地任务记录用于交易流水功能开发" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -19,35 +19,35 @@
     &quot;assignee&quot;: &quot;shuyixiao-better&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/shuyixiao-better/jinmaizi-cloud.git",
-    "accountId": "0be1968d-cd29-4183-857d-b52802278fac"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/shuyixiao-better/jinmaizi-cloud.git&quot;,
+    &quot;accountId&quot;: &quot;0be1968d-cd29-4183-857d-b52802278fac&quot;
   }
-}]]></component>
+}</component>
   <component name="McpProjectServerCommands">
     <commands />
     <urls />
   </component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.001177528973473" />
-      <entry key="MS500" value="1.4168022300501242" />
-      <entry key="S2" value="3.1018605769943335" />
-      <entry key="S5" value="4.071916277648114" />
-      <entry key="S10" value="4.50154694710173" />
-      <entry key="S30" value="4.825501144861448" />
-      <entry key="S60" value="4.911659822966482" />
-      <entry key="M2" value="4.955553540201576" />
-      <entry key="M5" value="4.982154609425085" />
-      <entry key="M10" value="4.991066130221238" />
-      <entry key="M15" value="4.994041600618223" />
-      <entry key="M30" value="4.997019556466357" />
-      <entry key="H1" value="4.99850946713276" />
-      <entry key="H2" value="4.999254655773802" />
-      <entry key="H4" value="4.9996273084365725" />
-      <entry key="D1" value="4.999937882037808" />
-      <entry key="W1" value="4.999991125939237" />
+      <entry key="MS100" value="1.0040057995416822" />
+      <entry key="MS500" value="1.5407529322283415" />
+      <entry key="S2" value="4.419788617817554" />
+      <entry key="S5" value="6.938020968309448" />
+      <entry key="S10" value="8.274197016430024" />
+      <entry key="S30" value="9.37413969585443" />
+      <entry key="S60" value="9.68022144255525" />
+      <entry key="M2" value="9.838356413761426" />
+      <entry key="M5" value="9.93491600080754" />
+      <entry key="M10" value="9.967386439913374" />
+      <entry key="M15" value="9.978241689534515" />
+      <entry key="M30" value="9.989112867525218" />
+      <entry key="H1" value="9.994554437818156" />
+      <entry key="H2" value="9.997276719718563" />
+      <entry key="H4" value="9.998638235036095" />
+      <entry key="D1" value="9.99977302183396" />
+      <entry key="W1" value="9.99996757412306" />
     </decayedCancelled>
     <decayedSelected>
       <entry key="MS100" value="0.0" />
@@ -69,23 +69,23 @@
       <entry key="W1" value="0.0" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="0.967089515432244" />
-      <entry key="MS500" value="1.407306653572102" />
-      <entry key="S2" value="3.095013342535766" />
-      <entry key="S5" value="4.067925914311933" />
-      <entry key="S10" value="4.499260151667072" />
-      <entry key="S30" value="4.824664002258349" />
-      <entry key="S60" value="4.911231189807979" />
-      <entry key="M2" value="4.955336652528126" />
-      <entry key="M5" value="4.982067230042563" />
-      <entry key="M10" value="4.991022335868084" />
-      <entry key="M15" value="4.994012381079228" />
-      <entry key="M30" value="4.997004935033721" />
-      <entry key="H1" value="4.998502153498526" />
-      <entry key="H2" value="4.999250998226939" />
-      <entry key="H4" value="4.99962547948067" />
-      <entry key="D1" value="4.999937577186479" />
-      <entry key="W1" value="4.9999910823884255" />
+      <entry key="MS100" value="0.969425356201311" />
+      <entry key="MS500" value="1.520987487307432" />
+      <entry key="S2" value="4.398502287724699" />
+      <entry key="S5" value="6.924266872781924" />
+      <entry key="S10" value="8.265980776005595" />
+      <entry key="S30" value="9.371039436694506" />
+      <entry key="S60" value="9.67862141107748" />
+      <entry key="M2" value="9.837543537964759" />
+      <entry key="M5" value="9.934587713444268" />
+      <entry key="M10" value="9.967221769111775" />
+      <entry key="M15" value="9.978131791543206" />
+      <entry key="M30" value="9.989057859721115" />
+      <entry key="H1" value="9.994526919198972" />
+      <entry key="H2" value="9.99726295672781" />
+      <entry key="H4" value="9.99863135262019" />
+      <entry key="D1" value="9.99977187463677" />
+      <entry key="W1" value="9.999967410234614" />
     </decayedShown>
   </component>
   <component name="ProjectColorInfo">{
@@ -97,26 +97,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.MCP Project settings loaded": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "codeWithMe.voiceChat.enabledByDefault": "false",
-    "com.github.patou.gitmoji.migration-offered": "true",
-    "git-widget-placeholder": "main",
-    "javascript.preferred.runtime.type.id": "node",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "vcs.Git",
-    "ts.external.directory.path": "/Users/shuyixiao/WebstormProjects/jinmaizi-cloud/node_modules/@typescript/typescript-darwin-arm64/lib"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;com.github.patou.gitmoji.migration-offered&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;javascript.preferred.runtime.type.id&quot;: &quot;node&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;vcs.Git&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Users/shuyixiao/WebstormProjects/jinmaizi-cloud/node_modules/@typescript/typescript-darwin-arm64/lib&quot;
   }
-}]]></component>
+}</component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -136,6 +136,7 @@
       <workItem from="1787915106567" duration="25000" />
       <workItem from="1787915140098" duration="443000" />
       <workItem from="1788241338834" duration="4792000" />
+      <workItem from="1788254368276" duration="82000" />
     </task>
     <task id="LOCAL-00001" summary="feat(admin): 添加管理员后台功能模块&#10;&#10;- 实现管理员用户管理功能，包括创建、编辑、启用/禁用子账号&#10;- 添加卡号管理功能，支持创建卡号、设置初始金额和启停卡号&#10;- 集成交易流水查询功能，可按卡号、账号、类型和时间范围筛选&#10;- 实现账号交易统计页面，按业务时区统计子账号资金操作情况&#10;- 设计数据库迁移脚本，包含用户、会话、卡号、交易和审计日志表结构&#10;- 配置审计日志记录机制，追踪所有管理员操作行为&#10;- 添加余额变更触发器，确保交易流水与卡号余额一致性&#10;- 实现交易不可变性约束，防止历史数据被意外修改&#10;- 创建管理员路由模块，集成用户、卡号、交易和审计API端点&#10;- 配置基础环境变量示例文件和Git忽略规则">
       <option name="closed" value="true" />
@@ -241,7 +242,15 @@
       <option name="project" value="LOCAL" />
       <updated>1788246502751</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="remove(login): 移除登录页面底部Cloudflare标识&#10;&#10;- 删除了 &quot;Powered by Cloudflare Workers &amp; D1&quot; 文本&#10;- 更新了IDEA工作空间中的任务持续时间记录&#10;- 添加了新的本地任务记录用于交易流水功能开发">
+      <option name="closed" value="true" />
+      <created>1788254397243</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1788254397243</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -262,6 +271,7 @@
     <MESSAGE value="feat(admin): 添加卡号修改功能&#10;&#10;- 在 worker 路由中实现卡号修改接口，支持更新卡号和备注信息&#10;- 添加卡号验证 schema 并在创建和修改时复用&#10;- 在前端页面添加修改按钮和弹窗界面，支持卡号和备注编辑&#10;- 实现数据库事务处理，确保卡号修改时余额和状态保持不变&#10;- 添加审计日志记录，追踪卡号修改前后的变化情况&#10;- 编写测试用例验证卡号修改功能和历史流水保留逻辑&#10;- 更新管理界面描述，补充卡号修改操作说明" />
     <MESSAGE value="style(brand): 更新网站图标和品牌标识&#10;&#10;- 将网站图标从SVG格式更改为PNG格式，并更新版本参数&#10;- 在移动端登录界面使用新的品牌logo图片替代文字标识&#10;- 在管理后台布局中替换原有的Wheat图标为品牌logo&#10;- 移除不再使用的Wheat图标导入声明&#10;- 添加苹果设备触控图标链接标签" />
     <MESSAGE value="feat(admin): 添加交易流水日期筛选和导出功能&#10;&#10;- 实现自定义日期范围筛选功能，支持精确到天的交易查询&#10;- 添加上个月快捷选择按钮，方便快速定位常见时间范围&#10;- 实现交易流水导出为PNG图片功能，支持大容量数据分页导出&#10;- 新增日期验证逻辑，防止开始日期晚于结束日期的错误输入&#10;- 添加导出进度提示和成功/错误消息反馈&#10;- 优化页面布局，调整筛选条件展示方式提升用户体验&#10;- 创建交易报告生成工具，实现专业的财务报表样式输出&#10;- 添加上海时区的日期处理工具函数及相应测试用例" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(admin): 添加交易流水日期筛选和导出功能&#10;&#10;- 实现自定义日期范围筛选功能，支持精确到天的交易查询&#10;- 添加上个月快捷选择按钮，方便快速定位常见时间范围&#10;- 实现交易流水导出为PNG图片功能，支持大容量数据分页导出&#10;- 新增日期验证逻辑，防止开始日期晚于结束日期的错误输入&#10;- 添加导出进度提示和成功/错误消息反馈&#10;- 优化页面布局，调整筛选条件展示方式提升用户体验&#10;- 创建交易报告生成工具，实现专业的财务报表样式输出&#10;- 添加上海时区的日期处理工具函数及相应测试用例" />
+    <MESSAGE value="remove(login): 移除登录页面底部Cloudflare标识&#10;&#10;- 删除了 &quot;Powered by Cloudflare Workers &amp; D1&quot; 文本&#10;- 更新了IDEA工作空间中的任务持续时间记录&#10;- 添加了新的本地任务记录用于交易流水功能开发" />
+    <option name="LAST_COMMIT_MESSAGE" value="remove(login): 移除登录页面底部Cloudflare标识&#10;&#10;- 删除了 &quot;Powered by Cloudflare Workers &amp; D1&quot; 文本&#10;- 更新了IDEA工作空间中的任务持续时间记录&#10;- 添加了新的本地任务记录用于交易流水功能开发" />
   </component>
 </project>
